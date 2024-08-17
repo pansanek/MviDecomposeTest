@@ -2,9 +2,12 @@ package com.example.mvidecomposetest.presentation
 
 import android.os.Parcelable
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.value.Value
 import com.example.mvidecomposetest.domain.Contact
 import kotlinx.parcelize.Parcelize
 
@@ -14,9 +17,16 @@ class DefaultRootComponent(
 
     val navigation = StackNavigation<Config>()
 
+    val stack: Value<ChildStack<Config, ComponentContext>> = childStack(
+        source = navigation,
+        initialConfiguration = Config.ContactList,
+        handleBackButton = true,
+        childFactory = ::child
+    )
+
     fun child(
-        componentContext: ComponentContext,
-        config: Config
+        config: Config,
+        componentContext: ComponentContext
     ): ComponentContext {
         return when (config) {
             Config.AddContact -> {
