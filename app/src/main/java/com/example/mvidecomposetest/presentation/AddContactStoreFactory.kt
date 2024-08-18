@@ -13,13 +13,13 @@ class AddContactStoreFactory(
     private val addContactUseCase: AddContactUseCase,
 ) {
 
-    private val store: Store<AddContactStore.Intent, AddContactStore.State, AddContactStore.Label> =
-        storeFactory.create(
+    fun create(): AddContactStore = object : AddContactStore,
+        Store<AddContactStore.Intent, AddContactStore.State, AddContactStore.Label> by storeFactory.create(
             name = "AddContactStore",
             initialState = AddContactStore.State(username = "", phone = ""),
             reducer = ReducerImpl,
             executorFactory = ::ExecutorImpl
-        )
+        ) {}
 
     private sealed interface Action
 
@@ -28,6 +28,7 @@ class AddContactStoreFactory(
 
         data class ChangePhone(val phone: String) : Msg
     }
+
     private inner class ExecutorImpl : CoroutineExecutor<AddContactStore.Intent, Action,
             AddContactStore.State, Msg, AddContactStore.Label>() {
 
@@ -52,6 +53,7 @@ class AddContactStoreFactory(
             }
         }
     }
+
     private object ReducerImpl : Reducer<AddContactStore.State, Msg> {
 
         override fun AddContactStore.State.reduce(msg: Msg) = when (msg) {
