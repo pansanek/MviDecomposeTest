@@ -70,4 +70,8 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    implementation("com.arkivanov.mvikotlin:mvikotlin:3.2.1")
+    implementation("com.arkivanov.mvikotlin:mvikotlin-main:3.2.1")
+    implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:3.2.1")
 }
