@@ -2,6 +2,7 @@ package com.example.mvidecomposetest.presentation
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.statekeeper.consume
+import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.example.mvidecomposetest.core.componentScope
@@ -20,8 +21,10 @@ class DefaultEditContactComponent(
     val onContactSaved: () -> Unit
 ) : EditContactComponent, ComponentContext by componentContext {
 
-
-    private lateinit var store: EditContactStore
+    private val store: EditContactStore = instanceKeeper.getStore {
+        val storeFactory = EditContactStoreFactory()
+        storeFactory.create(contact)
+    }
 
     init {
         componentScope().launch {
