@@ -24,7 +24,7 @@ class EditContactStoreFactory(
             ),
             reducer = ReducerImpl,
             executorFactory = ::ExecutorImpl
-        )
+        ) {}
 
     private sealed interface Action
 
